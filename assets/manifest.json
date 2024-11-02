@@ -1,7 +1,7 @@
 {
   "name": "Po'o",
   "short_name": "Po'o",
-  "start_url": "/",
+  "start_url": "https://guilhermewilker.github.io/po-o/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
