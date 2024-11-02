@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="coffee">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- manifest json PWA -->
+    <link rel="manifest" href="assets/manifest.json" />
+    <link rel="icon" href="assets/icon-192x192.png" sizes="192x192" />
+    <link rel="icon" href="assets/icon-512x512.png" sizes="512x512" />
+
+    <!-- Alpine -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Tailwind and DaisyUI -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- javascript -->
+    <script src="/assets/main.js" defer></script>
+
+    <title>Po'o</title>
+  </head>
+  <body>
+    <main class="p-5 md:p-10 h-screen">
+      <div class="container mx-auto my-auto p-5 text-center max-w-md">
+        <div
+          class="card bg-base-100 w-full border shadow-xl bg-purple-50 text-secondary"
+        >
+          <div class="card-body">
+            <h2 class="card-title text-primary">
+              Ho'oponopono não precisa ser exaustivo...
+            </h2>
+            <p class="text-center">
+              Sinta-se à vontade para praticar no seu tempo. Cada vez que você
+              clicar no botão, estaremos aqui para te guiar.
+            </p>
+
+            <!-- Input para frase personalizada -->
+            <input
+              type="text"
+              id="customPhrase"
+              placeholder="Digite sua frase aqui"
+              class="input input-bordered w-full max-w-xs text-primary"
+            />
+
+            <div x-data="{ count: 0 }" class="text-center mt-4">
+              <template x-if="count >= 108">
+                <div class="text-green-600 font-semibold">
+                  Parabéns! Sessão finalizada!
+                </div>
+              </template>
+              <div class="text-2xl font-semibold text-purple-700 my-4">
+                <span x-text="count"></span> / 108
+              </div>
+
+              <!-- Botões de Incremento e Decremento -->
+              <div class="flex flex-col justify-center gap-4 items-center">
+                <button
+                  class="btn btn-primary size-48 rounded-full bg-[url('/assets/icon-192x192.png')] bg-cover"
+                  x-on:click="count = Math.min(108, count + 1); speak(getMessage())"
+                ></button>
+              </div>
+
+              <!-- Botão para Começar Nova Sessão -->
+              <div class="mt-6" x-show="count >= 108">
+                <button
+                  class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg transition duration-200"
+                  x-on:click="count = 0; speak('Iniciando nova sessão. ' + getCustomPhrase())"
+                >
+                  Iniciar Nova Sessão
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function speak(text) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = "pt-BR";
+          window.speechSynthesis.speak(utterance);
+        }
+
+        function getMessage() {
+          const phrase = document.getElementById("customPhrase").value || "";
+          return `${phrase}. Eu sinto muito, por favor me perdoe, eu te amo, sou grato!`;
+        }
+
+        function getCustomPhrase() {
+          return document.getElementById("customPhrase").value || "";
+        }
+      </script>
+    </main>
+  </body>
+  <script src="/assets/main.js"></script>
+</html>
